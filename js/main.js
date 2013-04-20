@@ -15,6 +15,22 @@ $(function(){
     // R O U T E S
     //
 
+    App.Router.map(function() {
+        this.resource('projects', {path: 'p'});
+    });
+
+    App.IndexRoute = Em.Route.extend({
+        redirect: function() {
+            this.transitionTo('projects');
+        }
+    });
+
+    App.ProjectsRoute = Em.Route.extend({
+        model: function() {
+            return App.Project.find();
+        }
+    });
+
 
     // =====================================================
     // C O N T R O L L E R S

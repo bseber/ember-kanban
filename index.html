@@ -17,5 +17,11 @@
 </head>
 <body>
 
+    <script type="text/x-handlebars" id="projects">
+        {{view Em.Select contentBinding="content"
+                         optionLabelPath="content.name"
+                         prompt="Please select a project"}}
+    </script>
+
 </body>
 </html>
