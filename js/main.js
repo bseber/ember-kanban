@@ -5,9 +5,26 @@ $(function(){
         LOG_TRANSITIONS: true
     });
 
+    var queryFixtures = function(fixtures, query, type) {
+
+        var filterItems = function(item) {
+            var filter = true;
+            $.each(query, function(prop, val) {
+                if (!filter) {
+                    return;
+                }
+                filter = item[prop] && item[prop] === val;
+            });
+            return filter;
+        }
+
+        var result = fixtures.filter(filterItems);
+        return result;
+    }
+
     App.Store = DS.Store.extend({
         revision: 12,
-        adapter: DS.FixtureAdapter.extend({})
+        adapter: DS.FixtureAdapter.extend({queryFixtures: queryFixtures})
     });
 
 
@@ -17,7 +34,9 @@ $(function(){
 
     App.Router.map(function() {
         this.resource('projects', {path: 'p'}, function() {
-            this.resource('project', {path: ':project_id'});
+            this.resource('project', {path: ':project_id'}, function() {
+                this.route('kanban');
+            });
         });
     });
 
@@ -39,6 +58,12 @@ $(function(){
         }
     });
 
+    App.ProjectKanbanRoute = Em.Route.extend({
+        model: function() {
+            return App.Ticket.find({project_id: this.modelFor('project').get('id')});
+        }
+    });
+
 
     // =====================================================
     // C O N T R O L L E R S
@@ -50,7 +75,7 @@ $(function(){
         _onSelectionChange: function() {
             var selected = this.get('selected');
             if (selected) {
-                this.transitionToRoute('project', this.get('selected'));
+                this.transitionToRoute('project.kanban', this.get('selected'));
             } else {
                 this.transitionToRoute('index');
             }
