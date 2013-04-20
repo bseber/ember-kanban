@@ -1,0 +1,33 @@
+body {
+    padding-top: 60px;
+}
+
+.board {
+    font-family: 'Coming Soon', cursive;
+    background: url('../img/grid.png') repeat-x;
+    min-height: 300px;
+}
+
+.board h4 {
+    text-align: center;
+}
+
+.ticket {
+    margin: 0.25em 1em;
+    padding: 0.5em 1em;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0.2em;
+    font-weight: bold;
+}
+
+.ticket.ready {
+    background-color: mediumseagreen;
+}
+
+.ticket.inProgress {
+    background-color: yellow;
+}
+
+.ticket.done {
+    background-color: limegreen;
+}

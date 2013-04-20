@@ -4,8 +4,10 @@
     <meta charset="utf-8">
     <title>Kanban Board</title>
 
+    <link href='http://fonts.googleapis.com/css?family=Coming+Soon' rel='stylesheet' type='text/css'>
+
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css">
+    <!--link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css"-->
     <link rel="stylesheet" href="css/main.css">
 
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -18,14 +20,19 @@
 <body>
 
     <script type="text/x-handlebars" id="projects">
-        <div>
-            {{view Em.Select contentBinding="content"
-                             selectionBinding="selected"
-                             optionLabelPath="content.name"
-                             prompt="Please select a project"}}
-        </div>
-        <div>
-            {{outlet}}
+        <div class="container">
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="navbar-inner"></div>
+            </div>
+            <div>
+                {{view Em.Select contentBinding="content"
+                                 selectionBinding="selected"
+                                 optionLabelPath="content.name"
+                                 prompt="Please select a project"}}
+            </div>
+            <div>
+                {{outlet}}
+            </div>
         </div>
     </script>
 
@@ -33,16 +40,11 @@
         <small>no project selected</small>
     </script>
 
-    <script type="text/x-handlebars" id="project">
-        <h3>{{name}}</h3>
-        {{outlet}}
-    </script>
-
     <script type="text/x-handlebars" id="swimlane">
         <h4>{{view.title}}</h4>
-        <ul>
+        <ul class="unstyled">
             {{#each view.tickets}}
-                <li>{{view App.TicketView}}</li>
+                {{view App.TicketView}}
             {{else}}
                 <li>no tickets</li>
             {{/each}}
@@ -50,7 +52,7 @@
     </script>
 
     <script type="text/x-handlebars" id="ticket">
-        {{id}} - {{title}} ({{status}})
+        {{id}} - {{title}}
     </script>
 
 </body>

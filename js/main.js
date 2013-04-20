@@ -119,9 +119,18 @@ $(function(){
 
     App.TicketView = Em.View.extend(DnD.Draggable, {
 
-        tagName: 'span',
+        templateName: 'ticket',
 
-        templateName: 'ticket'
+        tagName: 'li',
+
+        classNames: 'ticket',
+
+        classNameBindings: ['status'],
+
+        status: function() {
+            return this.get('context.status');
+        }.property('context').cacheable()
+
     });
 
     App._SwimlaneView = Em.View.extend({
@@ -137,7 +146,7 @@ $(function(){
 
     App.ProjectKanbanView = Em.ContainerView.extend({
 
-        classNames: ['row'],
+        classNames: ['row', 'board'],
 
         childViews: ['readyTicketsView','inProgressTicketsView','doneTicketsView'],
 
