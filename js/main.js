@@ -29,6 +29,36 @@ $(function(){
 
 
     // =====================================================
+    // D R A G   A N D   D R O P
+    //
+
+    var DnD = Ember.Namespace.create({});
+
+    DnD.cancel = function(event) {
+        event.preventDefault();
+        return false;
+    };
+
+    DnD.Draggable = Ember.Mixin.create({
+        attributeBindings: 'draggable',
+        draggable: 'true',
+        dragStart: function(event) {
+            var dataTransfer = event.originalEvent.dataTransfer;
+            dataTransfer.setData('Text', this.get('elementId'));
+        }
+    });
+
+    DnD.Droppable = Ember.Mixin.create({
+        dragEnter: DnD.cancel,
+        dragOver: DnD.cancel,
+        drop: function(event) {
+            event.preventDefault();
+            return false;
+        }
+    });
+
+
+    // =====================================================
     // R O U T E S
     //
 
@@ -86,6 +116,13 @@ $(function(){
     // =====================================================
     // V I E W S
     //
+
+    App.TicketView = Em.View.extend(DnD.Draggable, {
+
+        tagName: 'span',
+
+        templateName: 'ticket'
+    });
 
     App._SwimlaneView = Em.View.extend({
 

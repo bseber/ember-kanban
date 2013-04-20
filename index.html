@@ -42,11 +42,15 @@
         <h4>{{view.title}}</h4>
         <ul>
             {{#each view.tickets}}
-                <li>{{id}} - {{title}} ({{status}})</li>
+                <li>{{view App.TicketView}}</li>
             {{else}}
                 <li>no tickets</li>
             {{/each}}
         </ul>
+    </script>
+
+    <script type="text/x-handlebars" id="ticket">
+        {{id}} - {{title}} ({{status}})
     </script>
 
 </body>
