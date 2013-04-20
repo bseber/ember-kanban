@@ -129,24 +129,42 @@ $(function(){
 
         status: function() {
             return this.get('context.status');
-        }.property('context').cacheable()
+        }.property('context').cacheable(),
+
+        dragStart: function(event) {
+            this._super(event);
+            this.set('controller.currentDragItem', this.get('context'));
+        },
+
+        dragEnd: function(event) {
+            this._super(event);
+            this.set('controller.currentDragItem', null);
+        }
 
     });
 
     App._SwimlaneView = Em.View.extend({
 
-        classNames: 'span4',
+        classNames: ['swimlane'],
+
+        classNameBindings: ['isDropTarget:highlight'],
 
         templateName: 'swimlane',
 
         tickets: function() {
             return this.get('controller.content').filterProperty('status', this.get('_status'));
-        }.property('controller.content.@each.status').cacheable()
+        }.property('controller.content.@each.status').cacheable(),
+
+        isDropTarget: function() {
+            var ancestor = this.get('_ancestor'),
+                status   = this.get('controller.currentDragItem.status');
+            return status && status === ancestor;
+        }.property('controller.currentDragItem').cacheable()
     });
 
     App.ProjectKanbanView = Em.ContainerView.extend({
 
-        classNames: ['row', 'board'],
+        classNames: ['board'],
 
         childViews: ['readyTicketsView','inProgressTicketsView','doneTicketsView'],
 
@@ -156,11 +174,13 @@ $(function(){
         }),
 
         inProgressTicketsView: App._SwimlaneView.extend({
+            _ancestor: 'ready',
             _status: 'inProgress',
             title: 'In Progress'
         }),
 
         doneTicketsView: App._SwimlaneView.extend({
+            _ancestor: 'inProgress',
             _status: 'done',
             title: 'Done'
         })
