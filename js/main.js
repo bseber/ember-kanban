@@ -82,6 +82,22 @@ $(function(){
         }.observes('selected')
     });
 
+    App.ProjectKanbanController = Em.ArrayController.extend({
+
+        doneTickets: function() {
+            return this.filterProperty('status', 'done');
+        }.property('content.@each.status.ready').cacheable(),
+
+        inProgressTickets: function() {
+            return this.filterProperty('status', 'inProgress');
+        }.property('content.@each.status.ready').cacheable(),
+
+        readyTickets: function() {
+            return this.filterProperty('status', 'ready');
+        }.property('content.@each.status.ready').cacheable()
+
+    });
+
 
     // =====================================================
     // V I E W S

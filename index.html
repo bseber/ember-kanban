@@ -39,13 +39,38 @@
     </script>
 
     <script type="text/x-handlebars" id="project/kanban">
-        <ul>
-            {{#each content}}
-                <li>{{id}} - {{title}} ({{status}})</li>
-            {{else}}
-                <li>no tickets</li>
-            {{/each}}
-        </ul>
+        <div class="row">
+            <div class="span4">
+                <h4>Ready</h4>
+                <ul>
+                    {{#each readyTickets}}
+                        <li>{{id}} - {{title}} ({{status}})</li>
+                    {{else}}
+                        <li>no tickets</li>
+                    {{/each}}
+                </ul>
+            </div>
+            <div class="span4">
+                <h4>In Progress</h4>
+                <ul>
+                    {{#each inProgressTickets}}
+                        <li>{{id}} - {{title}} ({{status}})</li>
+                    {{else}}
+                        <li>no tickets</li>
+                    {{/each}}
+                </ul>
+            </div>
+            <div class="span4">
+                <h4>Done</h4>
+                <ul>
+                    {{#each doneTickets}}
+                        <li>{{id}} - {{title}} ({{status}})</li>
+                    {{else}}
+                        <li>no tickets</li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
     </script>
 
 </body>
