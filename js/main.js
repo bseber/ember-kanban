@@ -82,27 +82,43 @@ $(function(){
         }.observes('selected')
     });
 
-    App.ProjectKanbanController = Em.ArrayController.extend({
-
-        doneTickets: function() {
-            return this.filterProperty('status', 'done');
-        }.property('content.@each.status.ready').cacheable(),
-
-        inProgressTickets: function() {
-            return this.filterProperty('status', 'inProgress');
-        }.property('content.@each.status.ready').cacheable(),
-
-        readyTickets: function() {
-            return this.filterProperty('status', 'ready');
-        }.property('content.@each.status.ready').cacheable()
-
-    });
-
 
     // =====================================================
     // V I E W S
     //
 
+    App._SwimlaneView = Em.View.extend({
+
+        classNames: 'span4',
+
+        templateName: 'swimlane',
+
+        tickets: function() {
+            return this.get('controller.content').filterProperty('status', this.get('_status'));
+        }.property('controller.content.@each.status').cacheable()
+    });
+
+    App.ProjectKanbanView = Em.ContainerView.extend({
+
+        classNames: ['row'],
+
+        childViews: ['readyTicketsView','inProgressTicketsView','doneTicketsView'],
+
+        readyTicketsView: App._SwimlaneView.extend({
+            _status: 'ready',
+            title: 'Ready'
+        }),
+
+        inProgressTicketsView: App._SwimlaneView.extend({
+            _status: 'inProgress',
+            title: 'In Progress'
+        }),
+
+        doneTicketsView: App._SwimlaneView.extend({
+            _status: 'done',
+            title: 'Done'
+        })
+    });
 
 
     // =====================================================
