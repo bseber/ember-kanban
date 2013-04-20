@@ -16,7 +16,9 @@ $(function(){
     //
 
     App.Router.map(function() {
-        this.resource('projects', {path: 'p'});
+        this.resource('projects', {path: 'p'}, function() {
+            this.resource('project', {path: ':project_id'});
+        });
     });
 
     App.IndexRoute = Em.Route.extend({
@@ -35,6 +37,19 @@ $(function(){
     // =====================================================
     // C O N T R O L L E R S
     //
+
+    App.ProjectsController = Em.ArrayController.extend({
+        selected: null,
+
+        _onSelectionChange: function() {
+            var selected = this.get('selected');
+            if (selected) {
+                this.transitionToRoute('project', this.get('selected'));
+            } else {
+                this.transitionToRoute('index');
+            }
+        }.observes('selected')
+    });
 
 
     // =====================================================

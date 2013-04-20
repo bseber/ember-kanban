@@ -18,10 +18,26 @@
 <body>
 
     <script type="text/x-handlebars" id="projects">
-        {{view Em.Select contentBinding="content"
-                         optionLabelPath="content.name"
-                         prompt="Please select a project"}}
+        <div>
+            {{view Em.Select contentBinding="content"
+                             selectionBinding="selected"
+                             optionLabelPath="content.name"
+                             prompt="Please select a project"}}
+        </div>
+        <div>
+            {{outlet}}
+        </div>
     </script>
+
+    <script type="text/x-handlebars" id="projects/index">
+        <small>no project selected</small>
+    </script>
+
+    <script type="text/x-handlebars" id="project">
+        <h3>{{name}}</h3>
+        {{outlet}}
+    </script>
+
 
 </body>
 </html>
