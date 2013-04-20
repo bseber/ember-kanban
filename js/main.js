@@ -33,6 +33,12 @@ $(function(){
         }
     });
 
+    App.ProjectRoute = Em.Route.extend({
+        setupController: function(controller, model) {
+            this.controllerFor('projects').set('selected', model);
+        }
+    });
+
 
     // =====================================================
     // C O N T R O L L E R S
